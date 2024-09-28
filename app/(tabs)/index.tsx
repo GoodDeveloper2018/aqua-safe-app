@@ -7,15 +7,15 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>AquaSafe App</Text>
-        <Text style={styles.subtitle}>Track Water Contamination Globally</Text>
+        <Text style={styles.title}>Welcome to AquaSafe</Text>
+        <Text style={styles.subtitle}>The App Used For Tracking Water Contamination Globally</Text>
 
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>View Global Water Heatmap</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Learn About Water Contamination</Text>
+          <Text style={styles.buttonText}>Learn More About Water Contamination</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
