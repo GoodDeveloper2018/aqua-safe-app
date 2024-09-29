@@ -2,8 +2,21 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import HeatMapScreen from './heat-map'; // Import your heatmap screen
 
-const HomeScreen = () => {
+// Define and export the type for your navigation stack
+export type RootStackParamList = {
+  Home: undefined; // No params for Home screen
+  HeatMap: undefined; // No params for HeatMap screen
+};
+
+// Create a type for the HomeScreen's props
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   // Get the safe area insets
   const insets = useSafeAreaInsets();
 
@@ -25,10 +38,14 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>AquaSafe App</Text>
+        <Text style={styles.title}>AquaSafe</Text>
         <Text style={styles.subtitle}>Track Water Contamination Globally</Text>
 
-        <TouchableOpacity style={styles.button}>
+        {/* Button to navigate to HeatMap screen */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('HeatMap')} // Properly typed navigation
+        >
           <Text style={styles.buttonText}>View Global Water Heatmap</Text>
         </TouchableOpacity>
 
@@ -47,6 +64,24 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
+
+// Creating the tab navigator
+const Tab = createBottomTabNavigator<RootStackParamList>(); // Use the defined type
+
+const App = () => {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName="Home">
+          <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Tab.Screen name="HeatMap" component={HeatMapScreen} options={{ title: 'Global Water Heatmap' }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -96,13 +131,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-
-const App = () => {
-  return (
-    <SafeAreaProvider>
-      <HomeScreen />
-    </SafeAreaProvider>
-  );
-};
-
-export default App;
